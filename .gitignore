@@ -1,3 +1,5 @@
 processed
 rawdata
 .git
+codes/GazeHub/*/.env
+codes/GazeHub/core/__pycache__

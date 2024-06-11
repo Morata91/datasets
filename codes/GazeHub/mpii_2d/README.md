@@ -4,7 +4,38 @@
 
 元のプロトコルに従ってデータセットを分割します。評価には15名の被験者と各被験者の3000枚の画像を使用します。顔と目の画像を切り取り、MPIIGazeで提供されたPoR（Point of Regard）を直接使用します。
 
-## 前処理コード
+
+## ①データセットのダウンロード
+
+### MPIIFaceGazeのダウンロード
+
+https://www.mpi-inf.mpg.de/departments/computer-vision-and-machine-learning/research/gaze-based-human-computer-interaction/its-written-all-over-your-face-full-face-appearance-based-gaze-estimation
+から、MPIIFaceGazeをダウンロード
+
+```bash
+cd datasets/rawdata
+wget http://datasets.d2.mpi-inf.mpg.de/MPIIGaze/MPIIFaceGaze.zip
+unzip MPIIFaceGaze.zip
+```
+
+### MPIIGazeのダウンロード
+https://www.mpi-inf.mpg.de/departments/computer-vision-and-machine-learning/research/gaze-based-human-computer-interaction/appearance-based-gaze-estimation-in-the-wild
+から、MPIIGazeをダウンロード
+```bash
+cd datasets/rawdata
+wget "http://datasets.d2.mpi-inf.mpg.de/MPIIGaze/MPIIGaze.tar.gz"
+tar -zxvf MPIIGaze.tar.gz
+```
+
+## ②準備
+```bash
+cd codes/GazeHub/mpii_2d/
+python -m venv .env
+source .env/bin/activate
+pip install -r requirements.txt
+```
+
+## ②処理
 `data_processing_mpii.py`
 コードには以下のパラメータが含まれています。
 
@@ -32,27 +63,7 @@ python datasets/codes/GazeHub/mpii_2d/data_processing_mpii.py
 
 正規化されたデータの使用ガイドも提供しています。
 
-## データセットのダウンロード
 
-### MPIIFaceGazeのダウンロード
-
-https://www.mpi-inf.mpg.de/departments/computer-vision-and-machine-learning/research/gaze-based-human-computer-interaction/its-written-all-over-your-face-full-face-appearance-based-gaze-estimation
-から、MPIIFaceGazeをダウンロード
-
-```bash
-cd datasets/rawdata
-wget http://datasets.d2.mpi-inf.mpg.de/MPIIGaze/MPIIFaceGaze.zip
-unzip MPIIFaceGaze.zip
-```
-
-### MPIIGazeのダウンロード
-https://www.mpi-inf.mpg.de/departments/computer-vision-and-machine-learning/research/gaze-based-human-computer-interaction/appearance-based-gaze-estimation-in-the-wild
-から、MPIIGazeをダウンロード
-```bash
-cd datasets/rawdata
-wget "http://datasets.d2.mpi-inf.mpg.de/MPIIGaze/MPIIGaze.tar.gz"
-tar -zxvf MPIIGaze.tar.gz
-```
 
 
 

@@ -3,14 +3,13 @@ import scipy.io as sio
 import cv2 
 import os
 import sys
-import gtools
 from easydict import EasyDict as edict
 sys.path.append("../core/")
 import data_processing_core as dpc
-import im_plot as ipt
+# import im_plot as ipt
 
 root = "../../../rawdata/MPIIFaceGaze"
-sample_root = "../../../rawdata/MPIIGaze/Origin/Evaluation Subset/sample list for eye image"
+sample_root = "../../../rawdata/MPIIGaze/Evaluation Subset/sample list for eye image"
 out_root = "../../../processed/MPII_2d"
 
 def ImageProcessing_MPII():
@@ -95,27 +94,33 @@ def ImageProcessing_Person(im_root, anno_path, screen_path, sample_list, im_outp
         # Read face' box
         facebox = GetFaceBox(annotation)  
         leftbox, rightbox = GetEyeBox(annotation)  
+        
+        # Define cropping function
+        def crop_img(image, x, y, width, height):
+            return image[y:y+height, x:x+width]
 
-        # Crop images
-        face_img = gtools.CropImg(im, 
-                      facebox.begin[0], 
-                      facebox.begin[1], 
-                      facebox.width, 
-                      facebox.height) 
+        # Crop face image
+        face_img = crop_img(im, 
+                            facebox.begin[0], 
+                            facebox.begin[1], 
+                            facebox.width, 
+                            facebox.height) 
         face_img = cv2.resize(face_img, (224, 224))
 
-        left_img = gtools.CropImg(im, 
-                      leftbox.begin[0], 
-                      leftbox.begin[1], 
-                      leftbox.width, 
-                      leftbox.height) 
+        # Crop left eye image
+        left_img = crop_img(im, 
+                            leftbox.begin[0], 
+                            leftbox.begin[1], 
+                            leftbox.width, 
+                            leftbox.height) 
         left_img = cv2.resize(left_img, (60, 36))
 
-        right_img = gtools.CropImg(im, 
-                      rightbox.begin[0], 
-                      rightbox.begin[1], 
-                      rightbox.width, 
-                      rightbox.height) 
+        # Crop right eye image
+        right_img = crop_img(im, 
+                            rightbox.begin[0], 
+                            rightbox.begin[1], 
+                            rightbox.width, 
+                            rightbox.height) 
         right_img = cv2.resize(right_img, (60, 36))
 
         image = edict()
